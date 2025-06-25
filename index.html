@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Te amo - Matrix con música</title>
+  <title>Te amo - Matrix con música y texto</title>
   <style>
     body {
       margin: 0;
@@ -38,6 +38,23 @@
       background: #FF2D75;
       color: black;
     }
+    #mensaje {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #FF2D75;
+      font-size: 28px;
+      font-weight: bold;
+      font-family: monospace;
+      text-shadow: 0 0 8px #FF2D75;
+      pointer-events: none;
+      z-index: 5;
+      user-select: none;
+      text-align: center;
+      max-width: 90vw;
+      line-height: 1.2;
+    }
   </style>
 </head>
 <body>
@@ -48,6 +65,10 @@
   <source src="otherworldly.mp3" type="audio/mpeg" />
   Tu navegador no soporta audio HTML5.
 </audio>
+
+<div id="mensaje">
+  Un regalito sencillo para el amor de mi vida,<br>con todo mi amor y solo para ti mi niña, te amo.
+</div>
 
 <canvas id="matrix"></canvas>
 
@@ -103,6 +124,7 @@
     canvas.height = height;
   });
 
+  // Control de música
   const musicControl = document.getElementById("musicControl");
   const bgMusic = document.getElementById("bgMusic");
 

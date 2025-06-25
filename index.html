@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Te amo - Matrix</title>
   <style>
     body {
@@ -12,13 +13,33 @@
     canvas {
       display: block;
     }
+
+    #playButton {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 15px 30px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #0f0;
+      font-size: 18px;
+      font-family: monospace;
+      border: 2px solid #0f0;
+      border-radius: 10px;
+      cursor: pointer;
+      z-index: 10;
+    }
   </style>
 </head>
 <body>
-<audio autoplay loop>
-  <source src="musica.mp3" type="audio/mpeg">
+
+<button id="playButton">Iniciar con música</button>
+
+<audio id="bgMusic" loop>
+  <source src="otherworldly.mp3" type="audio/mpeg">
   Tu navegador no soporta audio HTML5.
 </audio>
+
 <canvas id="matrix"></canvas>
 
 <script>
@@ -28,16 +49,14 @@
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  const letters = "アァイィウヴエェオカキクケコサシスセソタチッツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split("");
+  const letters = "アァイィウヴエェオカキクケコサシスセソABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split("");
   const fontSize = 18;
   const columns = Math.floor(canvas.width / fontSize);
   const drops = new Array(columns).fill(1);
 
   function draw() {
-    // Fondo semi-transparente para dejar rastro
     ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
     ctx.font = fontSize + "px monospace";
 
     for (let i = 0; i < drops.length; i++) {
@@ -45,13 +64,13 @@
       const y = drops[i] * fontSize;
 
       if (Math.random() < 0.002) {
-        ctx.fillStyle = "#FF2D75"; // Color para “Te amo” (rosa fuerte)
+        ctx.fillStyle = "#FF2D75";
         ctx.shadowColor = "#FF2D75";
         ctx.shadowBlur = 8;
         ctx.fillText("Te amo", x, y);
-        ctx.shadowBlur = 0; // Quitar sombra para las demás letras
+        ctx.shadowBlur = 0;
       } else {
-        ctx.fillStyle = "#0F0"; // Letras verdes
+        ctx.fillStyle = "#0F0";
         const text = letters[Math.floor(Math.random() * letters.length)];
         ctx.fillText(text, x, y);
       }
@@ -69,6 +88,14 @@
   window.addEventListener("resize", () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+  });
+
+  const playButton = document.getElementById("playButton");
+  const music = document.getElementById("bgMusic");
+
+  playButton.addEventListener("click", () => {
+    music.play();
+    playButton.style.display = "none";
   });
 </script>
 </body>

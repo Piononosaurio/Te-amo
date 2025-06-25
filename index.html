@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Te amo - Matrix Style</title>
+  <title>Te amo - Matrix</title>
   <style>
     body {
       margin: 0;
@@ -15,35 +15,45 @@
   </style>
 </head>
 <body>
+<audio autoplay loop>
+  <source src="musica.mp3" type="audio/mpeg">
+  Tu navegador no soporta audio HTML5.
+</audio>
 <canvas id="matrix"></canvas>
 
 <script>
   const canvas = document.getElementById("matrix");
   const ctx = canvas.getContext("2d");
 
-  canvas.height = window.innerHeight;
   canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 
-  const letters = "アァイィウヴエェオカキクケコサシスセソタチッツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789♥".split("");
-
-  const fontSize = 16;
-  const columns = canvas.width / fontSize;
-  const drops = Array.from({ length: columns }).fill(1);
+  const letters = "アァイィウヴエェオカキクケコサシスセソタチッツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split("");
+  const fontSize = 18;
+  const columns = Math.floor(canvas.width / fontSize);
+  const drops = new Array(columns).fill(1);
 
   function draw() {
+    // Fondo semi-transparente para dejar rastro
     ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = "#0F0"; // verde matrix
-    ctx.font = ${fontSize}px monospace;
+    ctx.font = fontSize + "px monospace";
 
     for (let i = 0; i < drops.length; i++) {
-      // Probabilidad de mostrar "Te amo"
-      if (Math.random() < 0.001) {
-        ctx.fillText("Te amo", i * fontSize, drops[i] * fontSize);
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+
+      if (Math.random() < 0.002) {
+        ctx.fillStyle = "#FF2D75"; // Color para “Te amo” (rosa fuerte)
+        ctx.shadowColor = "#FF2D75";
+        ctx.shadowBlur = 8;
+        ctx.fillText("Te amo", x, y);
+        ctx.shadowBlur = 0; // Quitar sombra para las demás letras
       } else {
+        ctx.fillStyle = "#0F0"; // Letras verdes
         const text = letters[Math.floor(Math.random() * letters.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        ctx.fillText(text, x, y);
       }
 
       if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
@@ -54,7 +64,7 @@
     }
   }
 
-  setInterval(draw, 35);
+  setInterval(draw, 33);
 
   window.addEventListener("resize", () => {
     canvas.width = window.innerWidth;
